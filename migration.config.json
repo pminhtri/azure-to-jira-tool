@@ -1,0 +1,109 @@
+{
+  "$comment": "Mapping between Azure DevOps and Jira. Edit this to match your project. Run `deno task fields` to see the real issue types / statuses / custom fields of the target Jira project.",
+
+  "options": {
+    "includeComments": true,
+    "includeHistory": false,
+    "includeAttachments": true,
+    "includeSprints": true,
+    "includeRank": true,
+    "includeLinks": true,
+    "includeRemovedWorkItems": false,
+    "closeCompletedSprints": true,
+    "inlineImageMode": "link",
+    "descriptionHeader": false,
+    "descriptionExtraFields": false,
+    "commentAttribution": false,
+    "wiqlFilter": ""
+  },
+
+  "$comment_issueType": "ADO Epic -> Jira Epic; Feature and User Story -> Story. During the hierarchy phase a child whose ADO parent is an Epic is linked through the Epic Link field; any other parent-child pair Jira cannot nest (e.g. Task under a Feature/Story) becomes a 'Relates' link. labels.fromWorkItemType keeps the original ADO type visible.",
+  "issueType": {
+    "Epic": "Epic",
+    "Feature": "Story",
+    "User Story": "Story",
+    "Product Backlog Item": "Story",
+    "Requirement": "Story",
+    "Task": "Task",
+    "Bug": "Bug",
+    "Issue": "Task",
+    "Impediment": "Task",
+    "Test Case": "Task",
+    "_default": "Task"
+  },
+
+  "$comment_status": "Only statuses that exist in SWAIS. The project runs more than one workflow, so a mapping applies only to the issue types whose workflow contains that status; anything unreachable keeps its default and is reported at the end of the run.",
+  "status": {
+    "New": "To Do",
+    "Approved": "To Do",
+    "Proposed": "To Do",
+    "To Do": "To Do",
+    "Active": "In Progress",
+    "Committed": "In Progress",
+    "In Progress": "In Progress",
+    "Doing": "In Progress",
+    "Review": "Verifying",
+    "Resolved": "Verifying",
+    "Done": "Done",
+    "Closed": "Done",
+    "Completed": "Done",
+    "Removed": "Done",
+    "_default": "To Do"
+  },
+
+  "$comment_sprintDates": "CSV source only — a CSV carries no iteration dates. The key is the full Iteration Path.",
+  "sprintDates": {},
+
+  "priority": {
+    "1": "Highest",
+    "2": "High",
+    "3": "Medium",
+    "4": "Low",
+    "_default": "Medium"
+  },
+
+  "linkType": {
+    "System.LinkTypes.Related": { "name": "Relates", "direction": "outward" },
+    "System.LinkTypes.Duplicate-Forward": { "name": "Duplicate", "direction": "outward" },
+    "System.LinkTypes.Duplicate-Reverse": { "name": "Duplicate", "direction": "inward" },
+    "System.LinkTypes.Dependency-Forward": { "name": "Blocks", "direction": "outward" },
+    "System.LinkTypes.Dependency-Reverse": { "name": "Blocks", "direction": "inward" },
+    "Microsoft.VSTS.Common.Affects-Forward": { "name": "Relates", "direction": "outward" },
+    "Microsoft.VSTS.Common.Affects-Reverse": { "name": "Relates", "direction": "inward" },
+    "System.LinkTypes.Remote.Related": { "name": "Relates", "direction": "outward" }
+  },
+
+  "fields": {
+    "$comment": "Fill in the matching customfield_xxxxx. Leave null when the project has no such field and the tool will skip it. On Jira Server / Data Center, epicLink is required for real Epic hierarchy and epicName is required to create Epics at all.",
+    "storyPoints": "customfield_10008",
+    "sprint": "customfield_10005",
+    "epicLink": "customfield_10001",
+    "epicName": "customfield_10003",
+    "adoId": "customfield_11000",
+    "adoUrl": null,
+    "originalEstimate": null,
+    "startDate": null
+  },
+
+  "labels": {
+    "fromTags": true,
+    "fromAreaPath": true,
+    "fromWorkItemType": true,
+    "areaPathPrefix": "area-",
+    "workItemTypePrefix": "ado-",
+    "extra": ["migrated-from-ado"]
+  },
+
+  "components": {
+    "$comment": "Map an Area Path (the part after the project name) onto a Jira component name. The component must already exist.",
+    "fromAreaPath": false,
+    "map": {}
+  },
+
+  "users": {
+    "$comment": "Map an ADO uniqueName/email onto a Jira accountId (Cloud), username (Server), or email. Leave empty to let the tool look users up by email. Set autoLookup to false if the site disables user search.",
+    "autoLookup": true,
+    "fallbackToUnassigned": true,
+    "map": {}
+  }
+}

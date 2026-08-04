@@ -1,0 +1,30 @@
+{
+  "name": "ado-to-jira",
+  "version": "1.0.0",
+  "exports": "./src/main.ts",
+  "tasks": {
+    "export": "deno run -A src/main.ts export",
+    "queries": "deno run -A src/main.ts queries",
+    "csv": "deno run -A src/main.ts csv",
+    "import": "deno run -A src/main.ts import",
+    "verify": "deno run -A src/main.ts verify",
+    "plan": "deno run -A src/main.ts plan",
+    "whoami": "deno run -A src/main.ts whoami",
+    "fields": "deno run -A src/main.ts fields",
+    "check": "deno check src/main.ts",
+    "test": "deno test -A src/",
+    "fmt": "deno fmt src/"
+  },
+  "imports": {
+    "node-html-parser": "npm:node-html-parser@^9.0.1"
+  },
+  "compilerOptions": {
+    "strict": true
+  },
+  "fmt": {
+    "lineWidth": 110,
+    "semiColons": true,
+    "singleQuote": false
+  },
+  "exclude": [".data", ".state", "script.ts"]
+}
